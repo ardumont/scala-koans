@@ -9,28 +9,28 @@ class AboutLiteralStrings extends KoanSuite with ShouldMatchers {
     val a = 'a'
     val b = 'B'
 
-    a.toString should be('a')
-    b.toString should be('B')
+    a.toString should be("a")
+    b.toString should be("B")
   }
 
   koan("Character Literals can use hexadecimal Unicode") {
     val c = '\u0061' //unicode for a
 
-    c.toString should be('a')
+    c.toString should be("a")
   }
 
   koan("Character Literals can use octal as well") {
     val d = '\141' //octal for a
 
-    d.toString should be('a')
+    d.toString should be("a")
   }
 
   koan("Character Literals can use escape sequences") {
     val e = '\"'
     val f = '\\'
 
-    e.toString should be('\"')
-    f.toString should be('\\')
+    e.toString should be("\"")
+    f.toString should be("\\")
   }
 
   koan("One-Line String Literals are surrounded by quotation marks.") {
@@ -40,7 +40,7 @@ class AboutLiteralStrings extends KoanSuite with ShouldMatchers {
 
   koan("String Literals can contain escape sequences.") {
     val a = "An \141pple \141 d\141y keeps the doctor \141w\141y"
-    a should be("An applet a day keeps the doctor away")
+    a should be("An apple a day keeps the doctor away")
   }
 
   koan("""Multiline String literals
