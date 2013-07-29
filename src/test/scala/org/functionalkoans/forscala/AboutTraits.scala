@@ -10,7 +10,6 @@ class AboutTraits extends KoanSuite {
       def listen(event: Event): String
     }
 
-
     class MyListener extends EventListener {
       def listen(event: Event): String = {
         event match {
@@ -22,7 +21,7 @@ class AboutTraits extends KoanSuite {
 
     val evt = Event("Moose Stampede")
     val myListener = new MyListener
-    myListener.listen(evt) should be (__)
+    myListener.listen(evt) should be ("An unfortunate moose stampede occurred")
   }
 
   koan("A class can only \'extend\' from one class or trait, any subsequent extension should use the keyword \'with\'") {
@@ -46,7 +45,7 @@ class AboutTraits extends KoanSuite {
 
     val evt = Event("Woodchuck Stampede")
     val myListener = new MyListener
-    myListener.listen(evt) should be (__)
+    myListener.listen(evt) should be ("An unfortunate woodchuck stampede occurred")
   }
 
   koan("Traits are polymorphic. Any type can be referred to by another type if related by extension") {
@@ -67,10 +66,10 @@ class AboutTraits extends KoanSuite {
 
     val myListener = new MyListener
 
-    myListener.isInstanceOf[MyListener] should be(__)
-    myListener.isInstanceOf[EventListener] should be(__)
-    myListener.isInstanceOf[Any] should be(__)
-    myListener.isInstanceOf[AnyRef] should be(__)
+    myListener.isInstanceOf[MyListener] should be(true)
+    myListener.isInstanceOf[EventListener] should be(true)
+    myListener.isInstanceOf[Any] should be(true)
+    myListener.isInstanceOf[AnyRef] should be(true)
   }
 
   koan("Traits can have concrete implementations that can be mixed into concrete classes with it's own state") {
@@ -102,21 +101,21 @@ class AboutTraits extends KoanSuite {
     val baker = new Baker
     baker.bake()
 
-    welder.logCache.size should be(__)
-    baker.logCache.size should be(__)
+    welder.logCache.size should be(1)
+    baker.logCache.size should be(1)
   }
 
   koan("Traits are instantiated before a classes instantiation") {
     var sb = List[String]()
 
     trait T1 {
-      sb = sb :+ "In T1: x=%s".format(x)
+      sb = sb :+ "In T1: x=%s".format(x)// default value of int is 0
       val x = 1
       sb = sb :+ "In T1: x=%s".format(x)
     }
 
     class C1 extends T1 {
-      sb = sb :+ "In C1: y=%s".format(y)
+      sb = sb :+ "In C1: y=%s".format(y)// default value of int is 0
       val y = 2
       sb = sb :+ "In C1: y=%s".format(y)
     }
@@ -125,9 +124,8 @@ class AboutTraits extends KoanSuite {
     new C1
     sb = sb :+ "Created C1"
 
-    sb.mkString(";") should be(__)
+    sb.mkString(";") should be("Creating C1;In T1: x=0;In T1: x=1;In C1: y=0;In C1: y=2;Created C1")
   }
-
 
   koan("Traits are instantiated before a classes instantiation from left to right") {
     var sb = List[String]()
@@ -154,7 +152,7 @@ class AboutTraits extends KoanSuite {
     new C1
     sb = sb :+ "Created C1"
 
-    sb.mkString(";") should be(__)
+    sb.mkString(";") should be("Creating C1;In T1: x=0;In T1: x=1;In T2: z=0;In T2: z=1;In C1: y=0;In C1: y=2;Created C1")
   }
 
   koan("Instantiations are tracked and will not allow a duplicate instantiation. " +
@@ -184,9 +182,8 @@ class AboutTraits extends KoanSuite {
     new C1
     sb = sb :+ "Created C1"
 
-    sb.mkString(";") should be(__)
+    sb.mkString(";") should be("Creating C1;In T2: z=0;In T2: z=1;In T1: x=0;In T1: x=1;In C1: y=0;In C1: y=2;Created C1")
   }
-
 
   koan("The diamond of death (http://en.wikipedia.org/wiki/Diamond_problem) is avoided since " +
     "instantiations are tracked and will not allow multiple instantiations") {
@@ -221,6 +218,6 @@ class AboutTraits extends KoanSuite {
     new C1
     sb = sb :+ "Created C1"
 
-    sb.mkString(";") should be(__)
+    sb.mkString(";") should be("Creating C1;In T1: x=0;In T1: x=1;In T2: z=0;In T2: z=2;In T3: w=0;In T3: w=3;In C1: y=0;In C1: y=4;Created C1")
   }
 }
