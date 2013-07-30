@@ -11,13 +11,14 @@ import org.functionalkoans.forscala.support.KoanSuite
 class AboutByNameParameter extends KoanSuite {
 
   koan(
-    """() => Int is a Function type that takes a Unit type. Unit is known as 'void' to a Java programmer. The function
-      | and returns an Int. You can place this as a method parameter so that you can you use it as a block, but still
+    """() => Int is a Function type that takes a Unit type and returns an Int.
+      | Unit is known as 'void' to a Java programmer.
+      | You can place this as a method parameter so that you can you use it as a block, but still
       | it doesn't look quite right.""") {
 
     def calc(x: () => Int): Either[Throwable, Int] = {
       try {
-        Right(x()) //An explicit call the the x function
+        Right(x()) //An explicit call to the x function
       } catch {
         case b: Throwable => Left(b)
       }
@@ -27,9 +28,8 @@ class AboutByNameParameter extends KoanSuite {
       14 + 15
     }
 
-    y should be (__)
+    y should be (Right(29))
   }
-
 
   koan(
     """A by-name parameter does the same thing as a previous koan but there is no need to explicitly
@@ -49,7 +49,7 @@ class AboutByNameParameter extends KoanSuite {
       49 + 20
     }
 
-    y should be (__)
+    y should be (Right(69))
   }
 
   koan("""By name parameters can also be used with an Object and apply to make interesting block-like calls""") {
@@ -63,6 +63,6 @@ class AboutByNameParameter extends KoanSuite {
       x ++ z //concatenate the strings
     }
 
-    result should be (__)
+    result should be ("retzelpay")
   }
 }
