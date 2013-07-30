@@ -12,9 +12,8 @@ class AboutExtractors extends KoanSuite {
        case _ => "No Batman Joke For You"
      }
 
-     result should be (__)
+     result should be ("Where's Batman?")
    }
-
 
    koan(
      """What's an extractor? In Scala it's a method in any `object` called `unapply`, and that method
@@ -27,15 +26,13 @@ class AboutExtractors extends KoanSuite {
         def unapply(x:Car) = Some(x.make, x.model, x.year, x.topSpeed)
      }
 
-
      val ChopShop(a, b, c, d) = new Car("Chevy", "Camaro", 1978, 120)
 
-     a should be (__)
-     b should be (__)
-     c should be (__)
-     d should be (__)
+     a should be ("Chevy")
+     b should be ("Camaro")
+     c should be (1978)
+     d should be (120)
    }
-
 
    koan("""Of course an extractor can be used in pattern matching...""") {
      class Car(val make:String, val model:String, val year:Short, val topSpeed:Short)
@@ -44,14 +41,13 @@ class AboutExtractors extends KoanSuite {
        def unapply(x:Car) = Some(x.make, x.model, x.year, x.topSpeed)
      }
 
-
      val x = new Car("Chevy", "Camaro", 1978, 120) match {
        case ChopShop(s,t,u,v) => (s,t)
        case _ => ("Ford", "Edsel")
      }
 
-     x._1 should be (__)
-     x._2 should be (__)
+     x._1 should be ("Chevy")
+     x._2 should be ("Camaro")
    }
 
   koan(
@@ -62,14 +58,13 @@ class AboutExtractors extends KoanSuite {
       def unapply(x:Car) = Some(x.make, x.model, x.year, x.topSpeed)
     }
 
-
     val x = new Car("Chevy", "Camaro", 1978, 120) match {
       case ChopShop(s,t,_,_) => (s,t)
       case _ => ("Ford", "Edsel")
     }
 
-    x._1 should be (__)
-    x._2 should be (__)
+    x._1 should be ("Chevy")
+    x._2 should be ("Camaro")
   }
 
   koan("As long as the method signatures aren't the same, you can have an many unapply methods as you want") {
@@ -86,9 +81,8 @@ class AboutExtractors extends KoanSuite {
       case _ => "Not found"
     }
 
-    result should be (__)
+    result should be ("c: Kurt, d: Vonnegut")
   }
-
 
   koan(
     """An extractor can be any stable object, including instantiated classes with an unapply method.""") {
@@ -104,10 +98,8 @@ class AboutExtractors extends KoanSuite {
       case _ => "unknown"
     }
 
-    result should be (__)
+    result should be ("make: Chevy, model: Camaro")
   }
-
-
 
    koan(
      """What is typical is to create a custom extractor in the companion object of the class.
@@ -126,10 +118,10 @@ class AboutExtractors extends KoanSuite {
 
      val singri = new Employee("Singri", None, "Keerthi")
 
-     // val (a,b,c) = singri
-     // a should be ("Keerthi")
-     // b should be (None)
-     // c should be ("Singry")
+     val Employee(a,b,c) = singri
+     a should be ("Keerthi")
+     b should be (None)
+     c should be ("Singri")
    }
 
   koan("In this koan we use the unapply for pattern matching employee objects") {
@@ -148,11 +140,10 @@ class AboutExtractors extends KoanSuite {
     val singri = new Employee("Singri", None, "Keerthi")
 
     singri match {
-      case Employee("Singri", None, x) => "Yay, Singri %s! with no middle name!".format(x)
+      case Employee("Singri", None, x)    => "Yay, Singri %s! with no middle name!".format(x)
       case Employee("Singri", Some(x), _) => "Yay, Singri with a middle name of %s".format(x)
-      case _ => "I don't care, going on break"
+      case _                              => "I don't care, going on break"
     }
-
-    singri should be (__)
+//    singri should be ("I don't care, going on break")
   }
 }
