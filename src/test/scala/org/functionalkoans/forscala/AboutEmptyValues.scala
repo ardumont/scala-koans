@@ -40,7 +40,7 @@ class AboutEmptyValues extends KoanSuite {
   koan("None cannot be cast to all types of objects") {
     intercept[ClassCastException] {
       // put the exception you expect to see in place of the blank
-      assert(None.asInstanceOf[String] === __)
+      assert(None.asInstanceOf[String] === false)
     }
   }
 
