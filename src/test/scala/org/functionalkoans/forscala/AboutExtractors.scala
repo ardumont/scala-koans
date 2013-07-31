@@ -43,7 +43,7 @@ class AboutExtractors extends KoanSuite {
 
      val x = new Car("Chevy", "Camaro", 1978, 120) match {
        case ChopShop(s,t,u,v) => (s,t)
-       case _ => ("Ford", "Edsel")
+//       case _                 => ("Ford", "Edsel") // matching unreachable here
      }
 
      x._1 should be ("Chevy")
@@ -60,7 +60,7 @@ class AboutExtractors extends KoanSuite {
 
     val x = new Car("Chevy", "Camaro", 1978, 120) match {
       case ChopShop(s,t,_,_) => (s,t)
-      case _ => ("Ford", "Edsel")
+//      case _                 => ("Ford", "Edsel") // matching unreachable here
     }
 
     x._1 should be ("Chevy")
@@ -78,7 +78,7 @@ class AboutExtractors extends KoanSuite {
 
     val result = new Employee("Kurt", None, "Vonnegut") match {
       case Tokenizer(c,d) => "c: %s, d: %s".format(c,d)
-      case _ => "Not found"
+//      case _              => "Not found" // case unreachable
     }
 
     result should be ("c: Kurt, d: Vonnegut")
@@ -95,7 +95,7 @@ class AboutExtractors extends KoanSuite {
 
     val result = camaro match {
       case camaro(make, model) => "make: %s, model: %s".format(make, model)
-      case _ => "unknown"
+//      case _                   => "unknown" // case unreachable
     }
 
     result should be ("make: Chevy, model: Camaro")
@@ -144,6 +144,7 @@ class AboutExtractors extends KoanSuite {
       case Employee("Singri", Some(x), _) => "Yay, Singri with a middle name of %s".format(x)
       case _                              => "I don't care, going on break"
     }
-//    singri should be ("I don't care, going on break")
+    singri should be ("I don't care, going on break")
   }
+
 }
